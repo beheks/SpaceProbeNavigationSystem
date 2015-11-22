@@ -35,7 +35,7 @@ public class MoveShipToFinalPositionImpl implements MoveShipToFinalPosition {
           @Override
           public Point call(List<TrackingServiceContract.AlienShipAction> alienShipActions) {
             for (TrackingServiceContract.AlienShipAction action : alienShipActions) {
-              ShipMovementUtil.moveShip(action, ship, mUniverse);
+              AlienShipMovementUtil.moveShip(action, ship, mUniverse);
             }
             Log.d("TAG", ship.getPosition().toString());
             return ship.getPosition();
