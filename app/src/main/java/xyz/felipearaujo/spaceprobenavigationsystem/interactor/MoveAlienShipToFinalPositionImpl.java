@@ -1,9 +1,15 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
 import android.graphics.Point;
+import android.util.Log;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
@@ -24,18 +30,21 @@ public class MoveAlienShipToFinalPositionImpl implements MoveAlienShipToFinalPos
   }
 
   @Override
-  public Point execute(String email, AlienShip alienShip) throws AlienShipOutOfUniverseException {
-    Point shipPosition = alienShip.getShipPosition();
+  public Observable<Point> execute(String email, final AlienShip alienShip) {
 
-    // TODO: consider using GetData
-    for(AlienTrackingServiceContract.AlienShipAction action : mRepository.getMovements(email)) {
-      shipPosition = alienShip.moveShip(action);
-      if(!mUniverse.assertIfPositionIsValid(shipPosition)) {
-        throw new AlienShipOutOfUniverseException(
-            "Ship is out of universe bounds! x: " + shipPosition.x + " y: " + shipPosition.y
-        );
+    return mRepository.getMovements(email).flatMap(
+        new Func1<List<AlienTrackingServiceContract.AlienShipAction>, Observable<Point>>() {
+
+      @Override
+      public Observable<Point> call(List<AlienTrackingServiceContract.AlienShipAction>
+                                    alienShipActions) {
+        Log.d("MoveToFinal", alienShipActions.toString());
+        for(AlienTrackingServiceContract.AlienShipAction action : alienShipActions) {
+          alienShip.moveShip(action);
+        }
+
+        return Observable.just(alienShip.getShipPosition()).observeOn(AndroidSchedulers.mainThread());
       }
-    }
-    return shipPosition;
+    });
   }
 }

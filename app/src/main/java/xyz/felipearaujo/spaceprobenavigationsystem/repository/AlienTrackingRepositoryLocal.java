@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.AlienTrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.AlienTrackingServiceContractParser;
@@ -26,16 +29,30 @@ public class AlienTrackingRepositoryLocal implements AlienTrackingRepository {
   }
 
   @Override
-  public List<AlienTrackingServiceContract.AlienShipAction> getMovements(String email) {
-    List<AlienTrackingServiceContract.AlienShipAction> actions = new ArrayList<>();
+  public synchronized Observable<List<AlienTrackingServiceContract.AlienShipAction>>
+  getMovements(String email) {
 
-    List<String> movements = sAlienTrackingServiceLocal.getMovements();
+    return Observable.create(
+        new Observable.OnSubscribe<List<AlienTrackingServiceContract.AlienShipAction>>() {
 
-    for(String movement : movements) {
-      actions.add(sAlienTrackingServiceContract.parseAction(movement));
-    }
+          @Override
+          public void call(
+              Subscriber<? super List<AlienTrackingServiceContract.AlienShipAction>> subscriber) {
+            List<String> movements = sAlienTrackingServiceLocal.getMovements();
 
-    return actions;
+            if(movements != null) {
+              List<AlienTrackingServiceContract.AlienShipAction> actions = new ArrayList<>();
+              for (String movement : movements) {
+                actions.add(sAlienTrackingServiceContract.parseAction(movement));
+              }
+              subscriber.onNext(actions);
+            }
+            /*else {
+              subscriber.onError(new IllegalStateException());
+            }*/
+          }
+        }
+    );
   }
 
   @Override

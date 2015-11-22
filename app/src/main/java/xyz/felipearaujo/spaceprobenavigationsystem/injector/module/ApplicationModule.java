@@ -11,8 +11,10 @@ import dagger.Provides;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
+import retrofit.RxJavaCallAdapterFactory;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepository;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepositoryLocal;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepositoryRemote;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource
     .AlienTrackingServiceContract;
@@ -55,6 +57,7 @@ public class ApplicationModule {
     return new Retrofit.Builder()
         .baseUrl(AlienTrackingServiceRemote.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build()
         .create(AlienTrackingServiceRemote.class);
   }

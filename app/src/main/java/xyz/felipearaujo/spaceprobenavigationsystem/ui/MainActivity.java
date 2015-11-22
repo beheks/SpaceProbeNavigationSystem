@@ -1,5 +1,6 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.ui;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import rx.Subscriber;
+import rx.functions.Action1;
 import xyz.felipearaujo.spaceprobenavigationsystem.R;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip;
@@ -32,17 +35,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onClick(View v) {
       if(v == button) {
-        try {
-          mMoveAlienShipToFinalPosition.execute("test@test.com", mAlienShip);
-          //String msg = mSubmitData.execute("test@test.com", mAlienShip);
-          textView.setText(
-              mAlienShip.getShipPosition().x + " " + mAlienShip.getShipPosition().y + " " /*+ msg*/
-          );
-        }
-        catch(AlienShipOutOfUniverseException e) {
-          Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
-          toast.show();
-        }
+
+        //TODO Consider Extending subscriber
+        mMoveAlienShipToFinalPosition.execute("test@test.com", mAlienShip).subscribe(
+            new Subscriber<Point>() {
+              @Override
+              public void onCompleted() {
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                if( e instanceof IllegalStateException) {
+                  Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+
+                  toast.show();
+                }
+              }
+
+              @Override
+              public void onNext(Point point) {
+                textView.setText(point.x + " " + point.y + " " /*+ msg*/);
+              }
+            });
       }
     }
   };

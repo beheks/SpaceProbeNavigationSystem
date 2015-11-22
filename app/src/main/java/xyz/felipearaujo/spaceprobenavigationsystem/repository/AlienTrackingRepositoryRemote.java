@@ -1,17 +1,13 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository;
 
-import android.util.Log;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import rx.Observable;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.AlienTrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.AlienTrackingServiceRemote;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.AlienDirectionsResponse;
@@ -34,27 +30,23 @@ public class AlienTrackingRepositoryRemote implements AlienTrackingRepository {
   //TODO Error handling
   //TODO fix main thread not waiting for callback to finish EventBus?
   @Override
-  public List<AlienTrackingServiceContract.AlienShipAction> getMovements(String email) {
-    alienShipActions.clear();
-    Call<AlienDirectionsResponse> call = sAlienTrackingServiceRemote.getData(email);
-    call.enqueue(new Callback<AlienDirectionsResponse>() {
-                   @Override
-                   public void onResponse(Response<AlienDirectionsResponse> response, Retrofit
-                       retrofit) {
-                     for (String dir : response.body().getDirections()) {
-                       alienShipActions.add(sAlienTrackingServiceContract.parseAction(dir));
-                       Log.d("Callback", dir);
-                     }
-                   }
-
-                   @Override
-                   public void onFailure(Throwable t) {
-                     Log.d("Callback", t.getMessage());
-                   }
-                 }
-
+  public Observable<List<AlienTrackingServiceContract.AlienShipAction>> getMovements(String email) {
+    return sAlienTrackingServiceRemote.getData(email)
+        .subscribeOn(Schedulers.io())
+        .flatMap(
+        new Func1<AlienDirectionsResponse, Observable<List<AlienTrackingServiceContract
+            .AlienShipAction>>>() {
+          @Override
+          public Observable<List<AlienTrackingServiceContract.AlienShipAction>> call
+              (AlienDirectionsResponse alienDirectionsResponse) {
+            List<AlienTrackingServiceContract.AlienShipAction> actions = new ArrayList<>();
+            for (String dir : alienDirectionsResponse.getDirections()) {
+              actions.add(sAlienTrackingServiceContract.parseAction(dir));
+            }
+            return Observable.just(actions);
+          }
+        }
     );
-    return alienShipActions;
   }
 
   @Override
