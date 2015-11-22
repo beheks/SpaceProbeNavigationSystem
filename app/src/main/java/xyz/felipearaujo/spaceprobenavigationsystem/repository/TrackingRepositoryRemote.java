@@ -16,6 +16,10 @@ import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.
 
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.SubmissionResponse;
 
+/**
+ * Implementation for {@link TrackingRepository} for communicating with the API for retrieving
+ * the actions data and submitting the calculated final position.
+ */
 public class TrackingRepositoryRemote implements TrackingRepository {
   protected static AlienTrackingServiceRemote sAlienTrackingServiceRemote;
   protected static TrackingServiceContract sTrackingServiceContract;
