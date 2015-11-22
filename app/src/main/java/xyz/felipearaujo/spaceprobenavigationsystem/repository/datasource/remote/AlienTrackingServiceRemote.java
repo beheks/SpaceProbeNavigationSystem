@@ -1,6 +1,5 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote;
 
-import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import rx.Observable;
@@ -11,6 +10,7 @@ public interface AlienTrackingServiceRemote {
   @GET("/api/spaceprobe/getdata/{email}.json")
   Observable<AlienDirectionsResponse> getData(@Path("email") String email);
 
-  /*@GET("/api/spaceprobe/submitdata/{email}/{x}/{y}")
-  Call<String> submitData(@Path("email") String email, @Path("x") int x, @Path("y") int y);*/
+  @GET("/api/spaceprobe/submitdata/{email}/{x}/{y}")
+  Observable<SubmissionResponse>
+  submitData(@Path("email") String email, @Path("x") int x, @Path("y") int y);
 }

@@ -56,7 +56,7 @@ public class AlienTrackingRepositoryLocal implements AlienTrackingRepository {
   }
 
   @Override
-  public String submitFinalPosition(String email, int x, int y) {
-    return sAlienTrackingServiceLocal.submitFinalPosition(x, y);
+  public Observable<String> submitFinalPosition(String email, int x, int y) {
+    return null;
   }
 }

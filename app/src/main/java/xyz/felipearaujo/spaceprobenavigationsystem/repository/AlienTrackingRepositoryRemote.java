@@ -1,7 +1,5 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +7,12 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.AlienTrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.AlienTrackingServiceRemote;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.AlienDirectionsResponse;
+
+
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.SubmissionResponse;
 
 public class AlienTrackingRepositoryRemote implements AlienTrackingRepository {
   protected static AlienTrackingServiceRemote sAlienTrackingServiceRemote;
@@ -47,18 +47,12 @@ public class AlienTrackingRepositoryRemote implements AlienTrackingRepository {
         );
   }
   @Override
-  public String submitFinalPosition(String email, int x, int y) {
-    /*Call<String> call = sAlienTrackingServiceRemote.submitData(email, x, y);*/
-
-    String message = "";
-
-    /*try {
-      message = call.execute().body();
-    }
-    catch (IOException io) {
-      Log.e(AlienTrackingRepositoryRemote.class.getSimpleName(), "error querying api");
-    }*/
-
-    return message;
+  public Observable<String> submitFinalPosition(String email, int x, int y) {
+    return sAlienTrackingServiceRemote.submitData(email, x, y)
+        .map(new Func1<SubmissionResponse, String>() {
+          @Override
+          public String call(SubmissionResponse submissionResponse) {return submissionResponse.getMessage();
+          }
+        });
   }
 }

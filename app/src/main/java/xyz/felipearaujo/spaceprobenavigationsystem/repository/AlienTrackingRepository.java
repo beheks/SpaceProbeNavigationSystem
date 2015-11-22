@@ -7,5 +7,5 @@ import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.AlienTr
 
 public interface AlienTrackingRepository {
   Observable<List<AlienTrackingServiceContract.AlienShipAction>> getMovements(String email);
-  String submitFinalPosition(String email, int x, int y);
+  Observable<String> submitFinalPosition(String email, int x, int y);
 }

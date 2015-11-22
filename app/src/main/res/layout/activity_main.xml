@@ -25,7 +25,14 @@
       android:id="@+id/button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Calculate and Send"
+      android:text="Calculate"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+      android:id="@+id/submitButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Submit Data"
+      android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

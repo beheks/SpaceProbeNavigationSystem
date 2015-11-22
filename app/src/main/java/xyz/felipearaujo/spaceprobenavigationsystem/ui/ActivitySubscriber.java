@@ -3,6 +3,7 @@ package xyz.felipearaujo.spaceprobenavigationsystem.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -31,6 +32,8 @@ public class ActivitySubscriber<T> extends Subscriber<T> {
         e instanceof AlienShipOutOfUniverseException) {
           Toast.makeText(mActivity, errorMessage, Toast.LENGTH_SHORT).show();
     }
+
+    Log.e("ActivitySubscriber", e.getMessage());
   }
 
   @Override

@@ -1,7 +1,8 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
+import rx.Observable;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip;
 
 public interface SubmitData {
-  String execute(String email, AlienShip alienShip);
+  Observable<String> execute(String email, AlienShip alienShip);
 }

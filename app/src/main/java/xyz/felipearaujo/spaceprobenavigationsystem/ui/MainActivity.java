@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
   protected TextView textView;
   protected ProgressBar progressBar;
   protected Button button;
+  protected Button submitButton;
 
   @Inject MoveAlienShipToFinalPosition mMoveAlienShipToFinalPosition;
   @Inject SubmitData mSubmitData;
@@ -48,17 +49,35 @@ public class MainActivity extends AppCompatActivity {
               public void onCompleted() {
                 super.onCompleted();
                 textView.setText(mAlienShip.getPosition().toString());
-              }
-
-              @Override
-              public void onNext(Point point) {
-                textView.setText(point.toString());
+                submitButton.setVisibility(View.VISIBLE);
+                button.setVisibility(View.GONE);
               }
             });
 
         textView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         button.setEnabled(true);
+      }
+
+      if (v == submitButton) {
+        textView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        submitButton.setEnabled(false);
+
+        mSubmitData.execute("test@test.com", mAlienShip)
+            .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
+              @Override
+              public void onCompleted() {
+                super.onCompleted();
+                submitButton.setVisibility(View.GONE);
+                button.setVisibility(View.VISIBLE);
+              }
+
+              @Override
+              public void onNext(String message) {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+              }
+            });
       }
     }
   };
@@ -80,9 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
     textView = (TextView) findViewById(R.id.result);
     button = (Button) findViewById(R.id.button);
+    submitButton = (Button) findViewById(R.id.submitButton);
     progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
     progressBar.setVisibility(View.GONE);
+    submitButton.setVisibility(View.GONE);
     textView.setText(mAlienShip.getPosition().toString());
 
     button.setOnClickListener(mOnClickListener);
