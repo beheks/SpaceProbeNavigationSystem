@@ -14,10 +14,10 @@ import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip.Direction;
 public class ShipMovementUtil {
 
   private static final ImmutableMap<Direction, Point> FORWARD = ImmutableMap.of(
-      Direction.NORTH, new Point(1, 0),
-      Direction.SOUTH, new Point(-1, 0),
-      Direction.EAST, new Point(0, 1),
-      Direction.WEST, new Point(0, -1));
+      Direction.NORTH, new Point(0, 1),
+      Direction.SOUTH, new Point(0, -1),
+      Direction.EAST, new Point(1, 0),
+      Direction.WEST, new Point(-1, 0));
 
   private static final ImmutableMap<Direction, Direction> LEFT = ImmutableMap.of(
       Direction.NORTH, Direction.WEST,

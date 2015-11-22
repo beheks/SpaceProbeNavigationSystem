@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         button.setEnabled(false);
 
-        mMoveAlienShipToFinalPosition.execute("test@test.com", mAlienShip).subscribe(
-            new ActivitySubscriber<Point>(MainActivity.this) {
+        mMoveAlienShipToFinalPosition.execute("test@test.com", mAlienShip)
+            .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
               @Override
               public void onCompleted() {
                 super.onCompleted();
@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         button.setEnabled(true);
       }
 
-      if (v == submitButton) {
+      else if (v == submitButton) {
+        Log.d("TAG", "OK0");
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         submitButton.setEnabled(false);
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
     textView.setText(mAlienShip.getPosition().toString());
 
     button.setOnClickListener(mOnClickListener);
+    submitButton.setOnClickListener(mOnClickListener);
   }
 
 

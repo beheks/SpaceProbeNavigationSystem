@@ -1,5 +1,7 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,9 @@ public class AlienTrackingRepositoryRemote implements AlienTrackingRepository {
     return sAlienTrackingServiceRemote.submitData(email, x, y)
         .map(new Func1<SubmissionResponse, String>() {
           @Override
-          public String call(SubmissionResponse submissionResponse) {return submissionResponse.getMessage();
+          public String call(SubmissionResponse submissionResponse) {
+            Log.d("TAG", submissionResponse.getMessage());
+            return submissionResponse.getMessage();
           }
         });
   }
