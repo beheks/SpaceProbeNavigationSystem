@@ -13,7 +13,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
-import xyz.felipearaujo.spaceprobenavigationsystem.interactor.util.AlienShipMovementUtil;
+import xyz.felipearaujo.spaceprobenavigationsystem.interactor.util.ShipMovementUtil;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContract;
 
@@ -36,7 +36,7 @@ public class MoveShipToFinalPositionImpl implements MoveShipToFinalPosition {
           @Override
           public Point call(List<TrackingServiceContract.AlienShipAction> alienShipActions) {
             for (TrackingServiceContract.AlienShipAction action : alienShipActions) {
-              AlienShipMovementUtil.moveShip(action, ship, mUniverse);
+              ShipMovementUtil.moveShip(action, ship, mUniverse);
             }
             Log.d("TAG", ship.getPosition().toString());
             return ship.getPosition();
