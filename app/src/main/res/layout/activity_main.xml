@@ -2,17 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:weightSum="1"
+    android:paddingTop="20pt">
   <TextView
     android:id="@+id/result"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"/>
+    android:layout_gravity="center"
+      android:layout_weight="0.07"
+      android:gravity="center_horizontal"
+      android:textSize="18pt"
+      android:textAlignment="center" />
 
-  <Button
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Calculate and Send"/>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+      android:id="@+id/button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Calculate and Send"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
