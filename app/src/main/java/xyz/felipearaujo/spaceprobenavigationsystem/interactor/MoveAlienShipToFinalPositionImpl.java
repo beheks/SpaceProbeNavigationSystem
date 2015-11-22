@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
@@ -31,20 +32,20 @@ public class MoveAlienShipToFinalPositionImpl implements MoveAlienShipToFinalPos
 
   @Override
   public Observable<Point> execute(String email, final AlienShip alienShip) {
+    alienShip.resetShip();
 
-    return mRepository.getMovements(email).flatMap(
-        new Func1<List<AlienTrackingServiceContract.AlienShipAction>, Observable<Point>>() {
-
-      @Override
-      public Observable<Point> call(List<AlienTrackingServiceContract.AlienShipAction>
-                                    alienShipActions) {
-        Log.d("MoveToFinal", alienShipActions.toString());
-        for(AlienTrackingServiceContract.AlienShipAction action : alienShipActions) {
-          alienShip.moveShip(action);
-        }
-
-        return Observable.just(alienShip.getShipPosition()).observeOn(AndroidSchedulers.mainThread());
-      }
-    });
+    return mRepository.getMovements(email)
+        .map(new Func1<List<AlienTrackingServiceContract.AlienShipAction>, Point>() {
+          @Override
+          public Point call(List<AlienTrackingServiceContract.AlienShipAction> alienShipActions) {
+            for (AlienTrackingServiceContract.AlienShipAction action : alienShipActions) {
+              ShipMovementUtil.moveShip(action, alienShip, mUniverse);
+            }
+            Log.d("TAG", alienShip.getPosition().toString());
+            return alienShip.getPosition();
+          }
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
   }
 }

@@ -17,8 +17,8 @@ public class SubmitDataImpl implements SubmitData {
   @Override
   public String execute(String email, AlienShip alienShip) {
     return mRepository.submitFinalPosition(email,
-        alienShip.getShipPosition().x,
-        alienShip.getShipPosition().y
+        alienShip.getPosition().x,
+        alienShip.getPosition().y
     );
   }
 }

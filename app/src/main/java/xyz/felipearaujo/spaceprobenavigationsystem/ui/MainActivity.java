@@ -26,45 +26,39 @@ import xyz.felipearaujo.spaceprobenavigationsystem.interactor.SubmitData;
 
 public class MainActivity extends AppCompatActivity {
 
-  TextView textView;
-  ProgressBar progressBar;
-  Button button;
-  AlienShip mAlienShip;
+  protected TextView textView;
+  protected ProgressBar progressBar;
+  protected Button button;
 
   @Inject MoveAlienShipToFinalPosition mMoveAlienShipToFinalPosition;
   @Inject SubmitData mSubmitData;
+  @Inject AlienShip mAlienShip;
 
   private View.OnClickListener mOnClickListener = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-      if(v == button) {
-        mAlienShip = new AlienShip(new Point(0, 0));
+      if (v == button) {
+        textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         button.setEnabled(false);
-        //TODO Consider Extending subscriber
+
         mMoveAlienShipToFinalPosition.execute("test@test.com", mAlienShip).subscribe(
-            new Subscriber<Point>() {
+            new ActivitySubscriber<Point>(MainActivity.this) {
               @Override
               public void onCompleted() {
-                progressBar.setVisibility(View.GONE);
-                button.setEnabled(true);
-              }
-
-              @Override
-              public void onError(Throwable e) {
-                textView.setText(e.getLocalizedMessage());
-                if( e instanceof IllegalStateException) {
-                  Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
-
-                  toast.show();
-                }
+                super.onCompleted();
+                textView.setText(mAlienShip.getPosition().toString());
               }
 
               @Override
               public void onNext(Point point) {
-                textView.setText(point.x + " " + point.y + " " /*+ msg*/);
+                textView.setText(point.toString());
               }
             });
+
+        textView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+        button.setEnabled(true);
       }
     }
   };
@@ -89,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
     progressBar.setVisibility(View.GONE);
-    textView.setText(mAlienShip.getShipPosition().x + " " + mAlienShip.getShipPosition().y);
+    textView.setText(mAlienShip.getPosition().toString());
 
     button.setOnClickListener(mOnClickListener);
   }

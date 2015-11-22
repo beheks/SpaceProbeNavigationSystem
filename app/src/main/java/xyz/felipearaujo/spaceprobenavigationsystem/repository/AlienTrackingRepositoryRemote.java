@@ -1,5 +1,7 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,28 +29,23 @@ public class AlienTrackingRepositoryRemote implements AlienTrackingRepository {
 
   }
 
-  //TODO Error handling
-  //TODO fix main thread not waiting for callback to finish EventBus?
   @Override
   public Observable<List<AlienTrackingServiceContract.AlienShipAction>> getMovements(String email) {
     return sAlienTrackingServiceRemote.getData(email)
-        .subscribeOn(Schedulers.io())
-        .flatMap(
-        new Func1<AlienDirectionsResponse, Observable<List<AlienTrackingServiceContract
-            .AlienShipAction>>>() {
-          @Override
-          public Observable<List<AlienTrackingServiceContract.AlienShipAction>> call
-              (AlienDirectionsResponse alienDirectionsResponse) {
-            List<AlienTrackingServiceContract.AlienShipAction> actions = new ArrayList<>();
-            for (String dir : alienDirectionsResponse.getDirections()) {
-              actions.add(sAlienTrackingServiceContract.parseAction(dir));
-            }
-            return Observable.just(actions);
-          }
-        }
-    );
-  }
+        .map(new Func1<AlienDirectionsResponse, List<AlienTrackingServiceContract.AlienShipAction>>() {
 
+            @Override
+            public List<AlienTrackingServiceContract.AlienShipAction>
+            call(AlienDirectionsResponse alienDirectionsResponse) {
+              List<AlienTrackingServiceContract.AlienShipAction> actions = new ArrayList<>();
+              for (String dir : alienDirectionsResponse.getDirections()) {
+                actions.add(sAlienTrackingServiceContract.parseAction(dir));
+              }
+              return actions;
+            }
+          }
+        );
+  }
   @Override
   public String submitFinalPosition(String email, int x, int y) {
     /*Call<String> call = sAlienTrackingServiceRemote.submitData(email, x, y);*/

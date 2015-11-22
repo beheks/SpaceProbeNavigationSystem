@@ -2,7 +2,7 @@ package xyz.felipearaujo.spaceprobenavigationsystem.exception;
 
 public class AlienShipOutOfUniverseException extends RuntimeException {
   public AlienShipOutOfUniverseException() {
-    super();
+    this("Alien Ship Out Of Universe Bounds!");
   }
 
   public AlienShipOutOfUniverseException(final String message) {

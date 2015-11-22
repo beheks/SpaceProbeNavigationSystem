@@ -1,23 +1,39 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.ui;
 
-import rx.Subscriber;
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
-/**
- * Created by Felipe on 22/11/2015.
- */
-public class ActivitySubscriber extends Subscriber {
+import java.io.IOException;
+
+import rx.Subscriber;
+import xyz.felipearaujo.spaceprobenavigationsystem.exception.AlienShipOutOfUniverseException;
+
+public class ActivitySubscriber<T> extends Subscriber<T> {
+
+  private AppCompatActivity mActivity;
+
+  public ActivitySubscriber(AppCompatActivity activity) {
+    super();
+    mActivity = activity;
+  }
+
   @Override
   public void onCompleted() {
-
   }
 
   @Override
   public void onError(Throwable e) {
+    final String errorMessage = e.getMessage();
 
+    if(IOException.class.isAssignableFrom(e.getClass()) ||
+        e instanceof AlienShipOutOfUniverseException) {
+          Toast.makeText(mActivity, errorMessage, Toast.LENGTH_SHORT).show();
+    }
   }
 
   @Override
-  public void onNext(Object o) {
-
+  public void onNext(T t) {
   }
 }

@@ -17,8 +17,9 @@ public class GetDataImpl implements GetData {
     mRepository = repository;
   }
 
+  //TODO FIX
   @Override
   public Observable<List<AlienTrackingServiceContract.AlienShipAction>> execute(String email) {
-    return mRepository.getMovements(email);
+    return null;
   }
 }
