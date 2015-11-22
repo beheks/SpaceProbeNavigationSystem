@@ -1,8 +1,10 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
+import android.graphics.Point;
+
 import rx.Observable;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 
-public interface SubmitData {
-  Observable<String> execute(String email, Ship ship);
+public interface MoveShipToFinalPosition {
+  Observable<Point> execute(String email, Ship ship);
 }

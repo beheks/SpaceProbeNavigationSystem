@@ -5,23 +5,23 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepository;
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;
 
 public class SubmitDataImpl implements SubmitData {
 
-  AlienTrackingRepository mRepository;
+  TrackingRepository mRepository;
 
   @Inject
-  public SubmitDataImpl(AlienTrackingRepository repository) {
+  public SubmitDataImpl(TrackingRepository repository) {
     mRepository = repository;
   }
 
   @Override
-  public Observable<String> execute(String email, AlienShip alienShip) {
+  public Observable<String> execute(String email, Ship ship) {
     return mRepository.submitFinalPosition(email,
-        alienShip.getPosition().x,
-        alienShip.getPosition().y)
+        ship.getPosition().x,
+        ship.getPosition().y)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread());
   }

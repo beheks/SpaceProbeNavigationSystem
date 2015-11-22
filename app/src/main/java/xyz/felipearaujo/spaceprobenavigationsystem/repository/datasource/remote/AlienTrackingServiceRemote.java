@@ -8,7 +8,7 @@ public interface AlienTrackingServiceRemote {
   String BASE_URL = "https://mands-alien-test.herokuapp.com";
 
   @GET("/api/spaceprobe/getdata/{email}.json")
-  Observable<AlienDirectionsResponse> getData(@Path("email") String email);
+  Observable<DirectionsResponse> getData(@Path("email") String email);
 
   @GET("/api/spaceprobe/submitdata/{email}/{x}/{y}")
   Observable<SubmissionResponse>

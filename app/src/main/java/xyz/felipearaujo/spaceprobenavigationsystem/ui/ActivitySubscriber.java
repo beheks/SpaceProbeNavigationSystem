@@ -1,7 +1,5 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.ui;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,7 +7,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import rx.Subscriber;
-import xyz.felipearaujo.spaceprobenavigationsystem.exception.AlienShipOutOfUniverseException;
+import xyz.felipearaujo.spaceprobenavigationsystem.exception.ShipOutOfUniverseException;
 
 public class ActivitySubscriber<T> extends Subscriber<T> {
 
@@ -29,7 +27,7 @@ public class ActivitySubscriber<T> extends Subscriber<T> {
     final String errorMessage = e.getMessage();
 
     if(IOException.class.isAssignableFrom(e.getClass()) ||
-        e instanceof AlienShipOutOfUniverseException) {
+        e instanceof ShipOutOfUniverseException) {
           Toast.makeText(mActivity, errorMessage, Toast.LENGTH_SHORT).show();
     }
 

@@ -2,11 +2,7 @@ package xyz.felipearaujo.spaceprobenavigationsystem.entity;
 
 import android.graphics.Point;
 
-import com.google.common.collect.ImmutableMap;
-
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.AlienTrackingServiceContract;
-
-public class AlienShip {
+public class Ship {
   public enum Direction {
     NORTH,
     EAST,
@@ -17,7 +13,7 @@ public class AlienShip {
   private Direction mCurrentDirection = Direction.NORTH;
   private Point mPosition;
 
-  public AlienShip(Point initial) {
+  public Ship(Point initial) {
     this.mPosition = initial;
   }
 

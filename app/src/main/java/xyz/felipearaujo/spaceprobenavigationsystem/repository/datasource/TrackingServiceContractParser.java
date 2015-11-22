@@ -2,7 +2,7 @@ package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource;
 
 import android.util.Log;
 
-public class AlienTrackingServiceContractParser implements AlienTrackingServiceContract{
+public class TrackingServiceContractParser implements TrackingServiceContract {
   @Override
   public AlienShipAction parseAction(Object action) {
     try {

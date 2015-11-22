@@ -12,15 +12,12 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.functions.Action1;
 import xyz.felipearaujo.spaceprobenavigationsystem.R;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
-import xyz.felipearaujo.spaceprobenavigationsystem.entity.AlienShip;
-import xyz.felipearaujo.spaceprobenavigationsystem.exception.AlienShipOutOfUniverseException;
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.component.DaggerActivityComponent;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.ActivityModule;
-import xyz.felipearaujo.spaceprobenavigationsystem.interactor.MoveAlienShipToFinalPosition;
+import xyz.felipearaujo.spaceprobenavigationsystem.interactor.MoveShipToFinalPosition;
 import xyz.felipearaujo.spaceprobenavigationsystem.interactor.SubmitData;
 
 
@@ -31,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
   protected Button button;
   protected Button submitButton;
 
-  @Inject MoveAlienShipToFinalPosition mMoveAlienShipToFinalPosition;
+  @Inject MoveShipToFinalPosition mMoveAlienShipToFinalPosition;
   @Inject SubmitData mSubmitData;
-  @Inject AlienShip mAlienShip;
+  @Inject Ship mShip;
 
   private View.OnClickListener mOnClickListener = new View.OnClickListener() {
     @Override
@@ -43,20 +40,30 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         button.setEnabled(false);
 
-        mMoveAlienShipToFinalPosition.execute("test@test.com", mAlienShip)
+        mMoveAlienShipToFinalPosition.execute("test@test.com", mShip)
             .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
               @Override
               public void onCompleted() {
                 super.onCompleted();
-                textView.setText(mAlienShip.getPosition().toString());
+                textView.setText(mShip.getPosition().toString());
+
                 submitButton.setVisibility(View.VISIBLE);
                 button.setVisibility(View.GONE);
+                textView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                button.setEnabled(true);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                super.onError(e);
+                textView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                button.setEnabled(true);
               }
             });
 
-        textView.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
-        button.setEnabled(true);
+
       }
 
       else if (v == submitButton) {
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         submitButton.setEnabled(false);
 
-        mSubmitData.execute("test@test.com", mAlienShip)
+        mSubmitData.execute("test@test.com", mShip)
             .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
               @Override
               public void onCompleted() {
@@ -76,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
               @Override
               public void onNext(String message) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                //textView.setText(message);
               }
             });
       }
@@ -87,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mAlienShip = new AlienShip(new Point(0, 0));
+    mShip = new Ship(new Point(0, 0));
 
     DaggerActivityComponent
         .builder()
@@ -105,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     progressBar.setVisibility(View.GONE);
     submitButton.setVisibility(View.GONE);
-    textView.setText(mAlienShip.getPosition().toString());
+    textView.setText(mShip.getPosition().toString());
 
     button.setOnClickListener(mOnClickListener);
     submitButton.setOnClickListener(mOnClickListener);

@@ -3,7 +3,7 @@ package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.local;
 import java.util.Arrays;
 import java.util.List;
 
-public class AlienTrackingServiceLocal {
+public class TrackingServiceLocal {
 
   public List<String> getMovements() {
     return Arrays.asList("FORWARD", "FORWARD", "FORWARD", "RIGHT", "FORWARD",
@@ -15,7 +15,7 @@ public class AlienTrackingServiceLocal {
   }
 
   public String submitFinalPosition(int x, int y) {
-    if(x == 0 && y == 4) {
+    if(x == 4 && y == 0) {
       return "OK";
     }
     return "ERROR";

@@ -1,6 +1,6 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource;
 
-public interface AlienTrackingServiceContract {
+public interface TrackingServiceContract {
   enum AlienShipAction {
     FORWARD,
     RIGHT,

@@ -2,8 +2,6 @@ package xyz.felipearaujo.spaceprobenavigationsystem.injector.module;
 
 import android.app.Application;
 
-import com.google.gson.Gson;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -13,15 +11,13 @@ import retrofit.Retrofit;
 
 import retrofit.RxJavaCallAdapterFactory;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepository;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepositoryLocal;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.AlienTrackingRepositoryRemote;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource
-    .AlienTrackingServiceContract;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource
-    .AlienTrackingServiceContractParser;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.local
-    .AlienTrackingServiceLocal;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepositoryRemote;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContract;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContractParser;
+
+
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.local.TrackingServiceLocal;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote
     .AlienTrackingServiceRemote;
 
@@ -41,14 +37,14 @@ public class ApplicationModule {
 
   @Provides
   @Singleton
-  AlienTrackingServiceContract provideAlienTrackingServiceContract() {
-    return new AlienTrackingServiceContractParser();
+  TrackingServiceContract provideAlienTrackingServiceContract() {
+    return new TrackingServiceContractParser();
   }
 
   @Provides
   @Singleton
-  AlienTrackingServiceLocal provideAlienTrackingServiceLocal() {
-    return new AlienTrackingServiceLocal();
+  TrackingServiceLocal provideAlienTrackingServiceLocal() {
+    return new TrackingServiceLocal();
   }
 
   @Provides
@@ -64,9 +60,9 @@ public class ApplicationModule {
 
   @Provides
   @Singleton
-  AlienTrackingRepository provideAlienTrackingRepository(AlienTrackingServiceContract contract,
+  TrackingRepository provideAlienTrackingRepository(TrackingServiceContract contract,
                                                          AlienTrackingServiceRemote remote) {
-    return new AlienTrackingRepositoryRemote(contract, remote);
+    return new TrackingRepositoryRemote(contract, remote);
   }
 
   @Provides
