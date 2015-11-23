@@ -1,5 +1,7 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract;
 
+import xyz.felipearaujo.spaceprobenavigationsystem.exception.IllegalActionException;
+
 public interface TrackingServiceContract {
   enum ShipAction {
     FORWARD,
@@ -7,5 +9,5 @@ public interface TrackingServiceContract {
     LEFT
   }
 
-  ShipAction parseAction(Object action);
+  ShipAction parseAction(String action) throws IllegalActionException;
 }
