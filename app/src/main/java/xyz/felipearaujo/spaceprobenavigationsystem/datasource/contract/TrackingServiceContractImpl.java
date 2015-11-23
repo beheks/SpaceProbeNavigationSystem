@@ -1,14 +1,14 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract;
 
-import xyz.felipearaujo.spaceprobenavigationsystem.exception.IllegalActionException;
+import xyz.felipearaujo.spaceprobenavigationsystem.exception.IllegalShipActionException;
 
 public class TrackingServiceContractImpl implements TrackingServiceContract {
   @Override
-  public ShipAction parseAction(String action) throws IllegalActionException{
+  public ShipAction parseAction(String action) throws IllegalShipActionException {
     try {
-      return ShipAction.valueOf(action);
+      return ShipAction.valueOf(action.toUpperCase());
     } catch (IllegalArgumentException e) {
-      throw new IllegalActionException(action);
+      throw new IllegalShipActionException(action);
     }
   }
 }
