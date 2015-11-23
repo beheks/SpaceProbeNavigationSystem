@@ -2,7 +2,9 @@ package xyz.felipearaujo.spaceprobenavigationsystem.datasource;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
+
 import rx.Observable;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity.DirectionsResponse;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity.SubmissionResponse;
 

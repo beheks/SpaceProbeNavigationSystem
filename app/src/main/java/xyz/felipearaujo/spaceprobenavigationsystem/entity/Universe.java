@@ -18,7 +18,10 @@ public class Universe {
   /*
    * Returns true if the point is a is valid position in this Universe, else return false.
    */
-  public boolean assertIfPositionIsValid(Point position) {
-    return (position.x >= 0 && position.y >= 0 && position.x <= mWidth && position.y <= mHeight);
+  public boolean assertIfPositionIsValid(DirectedPosition position) {
+    return (position.getX() >= 0 &&
+        position.getY() >= 0 &&
+        position.getX() <= mWidth &&
+        position.getY() <= mHeight);
   }
 }

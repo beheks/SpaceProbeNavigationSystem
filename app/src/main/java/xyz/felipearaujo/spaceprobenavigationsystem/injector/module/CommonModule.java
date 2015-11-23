@@ -6,9 +6,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
-
 import retrofit.RxJavaCallAdapterFactory;
 
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
@@ -16,7 +16,6 @@ import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepositoryImpl;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContractImpl;
-
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.TrackingService;
 
 

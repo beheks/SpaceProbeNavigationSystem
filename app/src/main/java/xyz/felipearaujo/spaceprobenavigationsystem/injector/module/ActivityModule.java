@@ -1,9 +1,9 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.injector.module;
 
-import android.graphics.Point;
-
 import dagger.Module;
 import dagger.Provides;
+
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.scope.PerActivity;
@@ -33,7 +33,6 @@ public class ActivityModule {
   @Provides
   @PerActivity
   Ship provideShip() {
-    Point start = new Point(0, 0);
-    return new Ship(start, Ship.Direction.NORTH);
+    return new Ship(0, 0, DirectedPosition.Direction.NORTH);
   }
 }

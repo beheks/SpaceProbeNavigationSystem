@@ -3,6 +3,7 @@ package xyz.felipearaujo.spaceprobenavigationsystem.repository;
 import java.util.List;
 
 import rx.Observable;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 
 /**

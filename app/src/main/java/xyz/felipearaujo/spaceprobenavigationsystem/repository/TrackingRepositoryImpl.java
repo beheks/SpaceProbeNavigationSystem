@@ -7,12 +7,10 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.functions.Func1;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.TrackingService;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
-
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity.DirectionsResponse;
-
-
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity.SubmissionResponse;
 
 /**

@@ -5,6 +5,7 @@ import android.app.Application;
 import javax.inject.Singleton;
 
 import dagger.Component;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.CommonModule;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;

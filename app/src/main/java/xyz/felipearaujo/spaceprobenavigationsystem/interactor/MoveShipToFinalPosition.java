@@ -1,11 +1,10 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
-import android.graphics.Point;
-
 import rx.Observable;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
-import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract
-    .TrackingServiceContract;
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
+import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 
 /**
  * Service interface for calculating the ship's final position according to the actions provided.
@@ -20,5 +19,5 @@ public interface MoveShipToFinalPosition {
    * @param email  the string with the email that will be provided to retrieve the actions.
    * @return       the final coordinates for the Ship.
    */
-  Observable<Point> execute(String email);
+  Observable<DirectedPosition> execute(String email);
 }

@@ -1,7 +1,6 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
 import rx.Observable;
-import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 
 /**
  * Service interface to Submit results to system.

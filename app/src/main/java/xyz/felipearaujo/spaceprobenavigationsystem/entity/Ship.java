@@ -1,46 +1,35 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.entity;
 
-import android.graphics.Point;
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition.Direction;
 
 /**
  * Entity of Ship, a Ship has a direction and a coordinate for it's position in the Universe.
  */
 public class Ship {
-  public enum Direction {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
-  }
 
-  private Direction mCurrentDirection;
-  private Point mPosition;
+  private DirectedPosition mPosition;
+  private DirectedPosition mInitialPosition;
 
-  private Direction mInitialDirection;
-  private Point mInitialPosition;
-
-  public Ship(Point initial, Direction direction) {
-    this.mPosition = initial;
-    this.mCurrentDirection = direction;
-
-    this.mInitialPosition = initial;
-    this.mInitialDirection = direction;
+  public Ship(int x, int y, Direction direction) {
+    this.mPosition = new DirectedPosition(x, y, direction);
+    this.mInitialPosition = new DirectedPosition(x, y, direction);
 
   }
 
   public Direction getCurrentDirection() {
-    return mCurrentDirection;
+    return mPosition.getDirection();
   }
 
   public void setCurrentDirection(Direction currentDirection) {
-    mCurrentDirection = currentDirection;
+    mPosition.setDirection(currentDirection);
   }
 
-  public Point getPosition() {
+  public DirectedPosition getPosition() {
     return mPosition;
   }
 
-  public void setPosition(Point position) {
+  public void setPosition(DirectedPosition position) {
     mPosition = position;
   }
 
@@ -49,13 +38,12 @@ public class Ship {
    */
   public void resetShip() {
     mPosition = mInitialPosition;
-    mCurrentDirection = mInitialDirection;
   }
 
   @Override
   public String toString() {
-    return "At x:" + mPosition.x +
-        " y:" + mPosition.y +
-        " facing " + mCurrentDirection.toString().toLowerCase();
+    return "At x:" + mPosition.getX() +
+        " y:" + mPosition.getY() +
+        " facing " + mPosition.getDirection().toString().toLowerCase();
   }
 }

@@ -1,9 +1,7 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.ui.activity;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +18,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import xyz.felipearaujo.spaceprobenavigationsystem.R;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.component.DaggerActivityComponent;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.ActivityModule;
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     mCalculateButton.setEnabled(false);
 
     mMoveAlienShipToFinalPosition.execute(mEmail.getText().toString())
-        .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
+        .subscribe(new ActivitySubscriber<DirectedPosition>(MainActivity.this) {
           @Override
           public void onCompleted() {
             super.onCompleted();

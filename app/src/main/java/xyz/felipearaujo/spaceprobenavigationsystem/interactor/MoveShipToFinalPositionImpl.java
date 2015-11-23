@@ -1,7 +1,6 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.List;
 
@@ -11,6 +10,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.interactor.util.ShipMovementUtil;
@@ -30,11 +31,11 @@ public class MoveShipToFinalPositionImpl implements MoveShipToFinalPosition {
   }
 
   @Override
-  public Observable<Point> execute(String email) {
+  public Observable<DirectedPosition> execute(String email) {
     return mRepository.getMovements(email)
-        .map(new Func1<List<TrackingServiceContract.ShipAction>, Point>() {
+        .map(new Func1<List<TrackingServiceContract.ShipAction>, DirectedPosition>() {
           @Override
-          public Point call(List<TrackingServiceContract.ShipAction> shipActions) {
+          public DirectedPosition call(List<TrackingServiceContract.ShipAction> shipActions) {
             for (TrackingServiceContract.ShipAction action : shipActions) {
               ShipMovementUtil.moveShip(action, mShip, mUniverse);
             }
