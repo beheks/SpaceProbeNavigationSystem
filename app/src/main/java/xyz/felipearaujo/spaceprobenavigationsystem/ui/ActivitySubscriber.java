@@ -24,13 +24,7 @@ public class ActivitySubscriber<T> extends Subscriber<T> {
 
   @Override
   public void onError(Throwable e) {
-    final String errorMessage = e.getMessage();
-
-    if(IOException.class.isAssignableFrom(e.getClass()) ||
-        e instanceof ShipOutOfUniverseException) {
-          Toast.makeText(mActivity, errorMessage, Toast.LENGTH_SHORT).show();
-    }
-
+    Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
     Log.e("ActivitySubscriber", e.getMessage());
   }
 

@@ -38,6 +38,7 @@ dependencies {
 	provided 'javax.annotation:jsr250-api:1.0'
 
 	compile 'com.google.guava:guava:18.0'
+	compile 'com.jakewharton:butterknife:7.0.1'
 
 	androidTestCompile 'com.google.dagger:dagger:2.0.2'
 	testCompile 'com.google.dagger:dagger:2.0.2'

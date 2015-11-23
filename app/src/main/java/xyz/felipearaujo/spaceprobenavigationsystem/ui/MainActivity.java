@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import xyz.felipearaujo.spaceprobenavigationsystem.R;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
@@ -23,78 +26,96 @@ import xyz.felipearaujo.spaceprobenavigationsystem.interactor.SubmitData;
 
 public class MainActivity extends AppCompatActivity {
 
-  protected TextView textView;
-  protected ProgressBar progressBar;
-  protected Button button;
-  protected Button submitButton;
+  @Bind(R.id.result) protected TextView textView;
+  @Bind(R.id.progressBar) protected ProgressBar progressBar;
+  @Bind(R.id.button) protected Button button;
+  @Bind(R.id.submitButton) protected Button submitButton;
 
   @Inject MoveShipToFinalPosition mMoveAlienShipToFinalPosition;
   @Inject SubmitData mSubmitData;
   @Inject Ship mShip;
 
-  private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-      if (v == button) {
-        textView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        button.setEnabled(false);
+  @OnClick(R.id.button)
+  protected void buttonClick() {
+    showSpinner();
+    button.setEnabled(false);
 
-        mMoveAlienShipToFinalPosition.execute("test@test.com", mShip)
-            .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
-              @Override
-              public void onCompleted() {
-                super.onCompleted();
-                textView.setText(mShip.getPosition().toString());
+    mMoveAlienShipToFinalPosition.execute("test@test.com", mShip)
+        .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
+          @Override
+          public void onCompleted() {
+            super.onCompleted();
 
-                submitButton.setVisibility(View.VISIBLE);
-                button.setVisibility(View.GONE);
-                textView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-                button.setEnabled(true);
-              }
+            textView.setText(mShip.getPosition().toString());
 
-              @Override
-              public void onError(Throwable e) {
-                super.onError(e);
-                textView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-                button.setEnabled(true);
-              }
-            });
+            showText();
+            showSubmitButton();
+          }
 
+          @Override
+          public void onError(Throwable e) {
+            super.onError(e);
+            showText();
+            showCalculateButton();
+          }
+        });
+  }
 
-      }
+  @OnClick(R.id.submitButton)
+  protected void submitButtonClick() {
+    showSpinner();
+    submitButton.setEnabled(false);
 
-      else if (v == submitButton) {
-        Log.d("TAG", "OK0");
-        textView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        submitButton.setEnabled(false);
+    mSubmitData.execute("test@test.com", mShip)
+        .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
+          @Override
+          public void onCompleted() {
+            super.onCompleted();
+            showText();
+            showCalculateButton();
+          }
 
-        mSubmitData.execute("test@test.com", mShip)
-            .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
-              @Override
-              public void onCompleted() {
-                super.onCompleted();
-                submitButton.setVisibility(View.GONE);
-                button.setVisibility(View.VISIBLE);
-              }
+          @Override
+          public void onNext(String message) {
+            //textView.setText(message);
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+          }
 
-              @Override
-              public void onNext(String message) {
-                //textView.setText(message);
-              }
-            });
-      }
-    }
-  };
+          @Override
+          public void onError(Throwable e) {
+            super.onError(e);
+            showText();
+            showSubmitButton();
+          }
+        });
+  }
+
+  private void showCalculateButton() {
+    submitButton.setVisibility(View.GONE);
+    button.setVisibility(View.VISIBLE);
+    button.setEnabled(true);
+  }
+
+  private void showSubmitButton() {
+    submitButton.setVisibility(View.VISIBLE);
+    button.setVisibility(View.GONE);
+    submitButton.setEnabled(true);
+  }
+
+  private void showText() {
+    textView.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.GONE);
+  }
+
+  private void showSpinner() {
+    textView.setVisibility(View.GONE);
+    progressBar.setVisibility(View.VISIBLE);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    mShip = new Ship(new Point(0, 0));
+    setContentView(R.layout.activity_main);
 
     DaggerActivityComponent
         .builder()
@@ -103,19 +124,12 @@ public class MainActivity extends AppCompatActivity {
         .build()
         .inject(this);
 
-    setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
 
-    textView = (TextView) findViewById(R.id.result);
-    button = (Button) findViewById(R.id.button);
-    submitButton = (Button) findViewById(R.id.submitButton);
-    progressBar = (ProgressBar) findViewById(R.id.progressBar);
+    showCalculateButton();
+    showText();
 
-    progressBar.setVisibility(View.GONE);
-    submitButton.setVisibility(View.GONE);
     textView.setText(mShip.getPosition().toString());
-
-    button.setOnClickListener(mOnClickListener);
-    submitButton.setOnClickListener(mOnClickListener);
   }
 
 

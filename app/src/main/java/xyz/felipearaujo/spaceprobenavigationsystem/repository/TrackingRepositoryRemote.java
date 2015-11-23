@@ -10,30 +10,30 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Func1;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContract;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.AlienTrackingServiceRemote;
+import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.TrackingServiceRemote;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.DirectionsResponse;
 
 
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.SubmissionResponse;
 
 public class TrackingRepositoryRemote implements TrackingRepository {
-  protected static AlienTrackingServiceRemote sAlienTrackingServiceRemote;
+  protected static TrackingServiceRemote sTrackingServiceRemote;
   protected static TrackingServiceContract sTrackingServiceContract;
 
-  protected List<TrackingServiceContract.AlienShipAction> alienShipActions;
+  protected List<TrackingServiceContract.AlienShipAction> shipActions;
 
   @Inject
   public TrackingRepositoryRemote(TrackingServiceContract contract,
-                                  AlienTrackingServiceRemote remote) {
-    sAlienTrackingServiceRemote = remote;
+                                  TrackingServiceRemote remote) {
+    sTrackingServiceRemote = remote;
     sTrackingServiceContract = contract;
-    alienShipActions = new ArrayList<>();
+    shipActions = new ArrayList<>();
 
   }
 
   @Override
   public Observable<List<TrackingServiceContract.AlienShipAction>> getMovements(String email) {
-    return sAlienTrackingServiceRemote.getData(email)
+    return sTrackingServiceRemote.getData(email)
         .map(new Func1<DirectionsResponse, List<TrackingServiceContract.AlienShipAction>>() {
 
             @Override
@@ -50,7 +50,7 @@ public class TrackingRepositoryRemote implements TrackingRepository {
   }
   @Override
   public Observable<String> submitFinalPosition(String email, int x, int y) {
-    return sAlienTrackingServiceRemote.submitData(email, x, y)
+    return sTrackingServiceRemote.submitData(email, x, y)
         .map(new Func1<SubmissionResponse, String>() {
           @Override
           public String call(SubmissionResponse submissionResponse) {

@@ -4,7 +4,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import rx.Observable;
 
-public interface AlienTrackingServiceRemote {
+public interface TrackingServiceRemote {
   String BASE_URL = "https://mands-alien-test.herokuapp.com";
 
   @GET("/api/spaceprobe/getdata/{email}.json")

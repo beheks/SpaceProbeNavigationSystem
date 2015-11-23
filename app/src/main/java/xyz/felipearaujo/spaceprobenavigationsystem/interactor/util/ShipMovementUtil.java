@@ -40,14 +40,16 @@ public class ShipMovementUtil {
             FORWARD.get(ship.getCurrentDirection()),
             universe));
         break;
+
       case LEFT:
         ship.setCurrentDirection(LEFT.get(ship.getCurrentDirection()));
         break;
+
       case RIGHT:
         ship.setCurrentDirection(RIGHT.get(ship.getCurrentDirection()));
         break;
+
       default:
-        //TODO throw exception
         break;
     }
     return ship.getPosition();

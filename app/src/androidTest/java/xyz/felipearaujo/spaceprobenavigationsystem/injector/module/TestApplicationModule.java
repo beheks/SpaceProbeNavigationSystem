@@ -8,32 +8,18 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
-
 import retrofit.RxJavaCallAdapterFactory;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepositoryRemote;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContractParser;
-
-
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.local.TrackingServiceLocal;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote.TrackingServiceRemote;
 
-
+//TODO Create Mocks
 @Module
-public class ApplicationModule {
-  private static Application sApplication;
-
-  public ApplicationModule(Application app) {
-    sApplication = app;
-  }
-
-  @Provides
-  @Singleton
-  Application provideApplication() {
-    return sApplication;
-  }
+public class TestApplicationModule {
 
   @Provides
   @Singleton
@@ -61,7 +47,7 @@ public class ApplicationModule {
   @Provides
   @Singleton
   TrackingRepository provideAlienTrackingRepository(TrackingServiceContract contract,
-                                                         TrackingServiceRemote remote) {
+                                                    TrackingServiceRemote remote) {
     return new TrackingRepositoryRemote(contract, remote);
   }
 
