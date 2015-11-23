@@ -18,22 +18,22 @@ public class ActivityModule {
 
   @Provides
   @PerActivity
-  MoveShipToFinalPosition provideMoveShipToFinalPosition(
-      TrackingRepository repository,
-      Universe universe) {
-    return new MoveShipToFinalPositionImpl(repository, universe);
+  MoveShipToFinalPosition provideMoveShipToFinalPosition(TrackingRepository repository,
+                                                         Universe universe,
+                                                         Ship ship) {
+    return new MoveShipToFinalPositionImpl(repository, universe, ship);
   }
 
   @Provides
   @PerActivity
-  SubmitData provideSubmitData(TrackingRepository repository) {
-    return new SubmitDataImpl(repository);
+  SubmitData provideSubmitData(TrackingRepository repository, Ship ship) {
+    return new SubmitDataImpl(repository, ship);
   }
 
   @Provides
   @PerActivity
-  Ship provideAlienShip() {
+  Ship provideShip() {
     Point start = new Point(0, 0);
-    return new Ship(start);
+    return new Ship(start, Ship.Direction.NORTH);
   }
 }

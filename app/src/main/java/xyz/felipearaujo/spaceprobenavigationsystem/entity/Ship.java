@@ -13,11 +13,19 @@ public class Ship {
     WEST
   }
 
-  private Direction mCurrentDirection = Direction.NORTH;
+  private Direction mCurrentDirection;
   private Point mPosition;
 
-  public Ship(Point initial) {
+  private Direction mInitialDirection;
+  private Point mInitialPosition;
+
+  public Ship(Point initial, Direction direction) {
     this.mPosition = initial;
+    this.mCurrentDirection = direction;
+
+    this.mInitialPosition = initial;
+    this.mInitialDirection = direction;
+
   }
 
   public Direction getCurrentDirection() {
@@ -40,8 +48,7 @@ public class Ship {
    * Resets ship to initial position and direction to start a news search for the alien ship.
    */
   public void resetShip() {
-    mPosition.x = 0;
-    mPosition.y = 0;
-    mCurrentDirection = Direction.NORTH;
+    mPosition = mInitialPosition;
+    mCurrentDirection = mInitialDirection;
   }
 }

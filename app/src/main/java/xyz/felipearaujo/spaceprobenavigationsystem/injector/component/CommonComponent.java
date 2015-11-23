@@ -2,13 +2,17 @@ package xyz.felipearaujo.spaceprobenavigationsystem.injector.component;
 
 import android.app.Application;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
+import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.CommonModule;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;
 
-@Component(modules = TestApplicationComponent.class)
-public interface TestApplicationComponent {
+@Singleton
+@Component(modules = CommonModule.class)
+public interface CommonComponent {
   Application getApplication();
-  TrackingRepository getAlienTrackingRepository();
+  TrackingRepository getTrackingRepository();
   Universe getUniverse();
 }

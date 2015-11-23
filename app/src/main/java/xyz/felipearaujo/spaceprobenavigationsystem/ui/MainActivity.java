@@ -3,7 +3,6 @@ package xyz.felipearaujo.spaceprobenavigationsystem.ui;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     showSpinner();
     button.setEnabled(false);
 
-    mMoveAlienShipToFinalPosition.execute("test@test.com", mShip)
+    mMoveAlienShipToFinalPosition.execute("test@test.com")
         .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
           @Override
           public void onCompleted() {
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     showSpinner();
     submitButton.setEnabled(false);
 
-    mSubmitData.execute("test@test.com", mShip)
+    mSubmitData.execute("test@test.com")
         .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
           @Override
           public void onCompleted() {
@@ -90,6 +89,26 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    DaggerActivityComponent
+        .builder()
+        .commonComponent(SpaceProbeNavigationSystem.getCommonComponent())
+        .activityModule(new ActivityModule())
+        .build()
+        .inject(this);
+
+    ButterKnife.bind(this);
+
+    showCalculateButton();
+    showText();
+
+    textView.setText(mShip.getPosition().toString());
+  }
+
   private void showCalculateButton() {
     submitButton.setVisibility(View.GONE);
     button.setVisibility(View.VISIBLE);
@@ -110,26 +129,6 @@ public class MainActivity extends AppCompatActivity {
   private void showSpinner() {
     textView.setVisibility(View.GONE);
     progressBar.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    DaggerActivityComponent
-        .builder()
-        .applicationComponent(SpaceProbeNavigationSystem.getApplicationComponent())
-        .activityModule(new ActivityModule())
-        .build()
-        .inject(this);
-
-    ButterKnife.bind(this);
-
-    showCalculateButton();
-    showText();
-
-    textView.setText(mShip.getPosition().toString());
   }
 
 

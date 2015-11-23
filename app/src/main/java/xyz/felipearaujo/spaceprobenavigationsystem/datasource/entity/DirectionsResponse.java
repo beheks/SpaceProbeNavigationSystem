@@ -1,4 +1,4 @@
-package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote;
+package xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity;
 
 import java.util.List;
 
@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class DirectionsResponse {
   private List<String> Directions;
+
+  public DirectionsResponse(List<String> directions) {
+    Directions = directions;
+  }
 
   public List<String> getDirections() {
     return Directions;

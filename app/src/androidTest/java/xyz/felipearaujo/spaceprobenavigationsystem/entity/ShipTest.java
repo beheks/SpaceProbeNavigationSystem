@@ -13,15 +13,15 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.List;
 
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContract;
+import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 
 @RunWith(AndroidJUnit4.class)
 public class ShipTest {
 
-  private final static List<TrackingServiceContract.AlienShipAction> ACTION_LIST =
-      Arrays.asList(TrackingServiceContract.AlienShipAction.FORWARD,
-          TrackingServiceContract.AlienShipAction.RIGHT,
-          TrackingServiceContract.AlienShipAction.FORWARD);
+  private final static List<TrackingServiceContract.ShipAction> ACTION_LIST =
+      Arrays.asList(TrackingServiceContract.ShipAction.FORWARD,
+          TrackingServiceContract.ShipAction.RIGHT,
+          TrackingServiceContract.ShipAction.FORWARD);
 
   private Ship service;
 
@@ -40,19 +40,19 @@ public class ShipTest {
 
   @Test
   public void testTakeActions_outOfBounds(){
-    List<TrackingServiceContract.AlienShipAction> actionList =
+    List<TrackingServiceContract.ShipAction> actionList =
         Arrays.asList(
-            TrackingServiceContract.AlienShipAction.FORWARD,
-            TrackingServiceContract.AlienShipAction.FORWARD,
-            TrackingServiceContract.AlienShipAction.FORWARD,
-            TrackingServiceContract.AlienShipAction.FORWARD,
-            TrackingServiceContract.AlienShipAction.FORWARD,
-            TrackingServiceContract.AlienShipAction.FORWARD);
+            TrackingServiceContract.ShipAction.FORWARD,
+            TrackingServiceContract.ShipAction.FORWARD,
+            TrackingServiceContract.ShipAction.FORWARD,
+            TrackingServiceContract.ShipAction.FORWARD,
+            TrackingServiceContract.ShipAction.FORWARD,
+            TrackingServiceContract.ShipAction.FORWARD);
     try {
       //service.executeActions(actionList);
       Assert.fail();
     } catch (IllegalArgumentException expected) {
-
+      System.out.println(expected.getMessage());
     }
   }
 }

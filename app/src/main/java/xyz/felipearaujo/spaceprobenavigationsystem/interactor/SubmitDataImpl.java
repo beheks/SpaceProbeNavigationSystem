@@ -8,20 +8,22 @@ import rx.schedulers.Schedulers;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepository;
 
-public class SubmitDataImpl implements SubmitData {
+public class  SubmitDataImpl implements SubmitData {
 
-  TrackingRepository mRepository;
+  private final TrackingRepository mRepository;
+  private final Ship mShip;
 
   @Inject
-  public SubmitDataImpl(TrackingRepository repository) {
+  public SubmitDataImpl(TrackingRepository repository, Ship ship) {
     mRepository = repository;
+    mShip = ship;
   }
 
   @Override
-  public Observable<String> execute(String email, Ship ship) {
+  public Observable<String> execute(String email) {
     return mRepository.submitFinalPosition(email,
-        ship.getPosition().x,
-        ship.getPosition().y)
+        mShip.getPosition().x,
+        mShip.getPosition().y)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread());
   }

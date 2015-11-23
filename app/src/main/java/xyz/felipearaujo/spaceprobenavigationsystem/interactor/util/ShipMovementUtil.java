@@ -8,7 +8,7 @@ import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship.Direction;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.exception.ShipOutOfUniverseException;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.TrackingServiceContract;
+import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 
 public class ShipMovementUtil {
 
@@ -30,11 +30,11 @@ public class ShipMovementUtil {
       Direction.SOUTH, Direction.WEST,
       Direction.WEST, Direction.NORTH);
 
-  public static Point moveShip(TrackingServiceContract.AlienShipAction alienShipAction,
+  public static Point moveShip(TrackingServiceContract.ShipAction shipAction,
                                Ship ship,
                                Universe universe)
       throws ShipOutOfUniverseException {
-    switch (alienShipAction) {
+    switch (shipAction) {
       case FORWARD:
         ship.setPosition(incrementPosition(ship.getPosition(),
             FORWARD.get(ship.getCurrentDirection()),

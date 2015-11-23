@@ -1,4 +1,4 @@
-package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote;
+package xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity;
 
 /**
  * Response from submitData from API.

@@ -2,22 +2,22 @@ package xyz.felipearaujo.spaceprobenavigationsystem;
 
 import android.app.Application;
 
-import xyz.felipearaujo.spaceprobenavigationsystem.injector.component.ApplicationComponent;
-import xyz.felipearaujo.spaceprobenavigationsystem.injector.component.DaggerApplicationComponent;
-import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.ApplicationModule;
+import xyz.felipearaujo.spaceprobenavigationsystem.injector.component.CommonComponent;
+import xyz.felipearaujo.spaceprobenavigationsystem.injector.component.DaggerCommonComponent;
+import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.CommonModule;
 
 public class SpaceProbeNavigationSystem extends Application {
-  private static ApplicationComponent sApplicationComponent;
+  private static CommonComponent sCommonComponent;
   @Override
   public void onCreate() {
     super.onCreate();
 
-    sApplicationComponent = DaggerApplicationComponent.builder()
-        .applicationModule(new ApplicationModule(this))
+    sCommonComponent = DaggerCommonComponent.builder()
+        .commonModule(new CommonModule(this))
         .build();
   }
 
-  public static ApplicationComponent getApplicationComponent() {
-    return sApplicationComponent;
+  public static CommonComponent getCommonComponent() {
+    return sCommonComponent;
   }
 }
