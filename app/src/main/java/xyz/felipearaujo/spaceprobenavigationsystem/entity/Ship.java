@@ -2,6 +2,9 @@ package xyz.felipearaujo.spaceprobenavigationsystem.entity;
 
 import android.graphics.Point;
 
+/**
+ * Entity of Ship, a Ship has a direction and a coordinate for it's position in the Universe.
+ */
 public class Ship {
   public enum Direction {
     NORTH,
@@ -33,6 +36,9 @@ public class Ship {
     mPosition = position;
   }
 
+  /*
+   * Resets ship to initial position and direction to start a news search for the alien ship.
+   */
   public void resetShip() {
     mPosition.x = 0;
     mPosition.y = 0;

@@ -1,7 +1,7 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.remote;
 
 /**
- * Created by Felipe on 22/11/2015.
+ * Response from submitData from API.
  */
 public class SubmissionResponse {
   private int StatusCode;

@@ -11,7 +11,10 @@ import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.Trackin
 
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.datasource.local.TrackingServiceLocal;
 
-
+/**
+ * Implementation for {@link TrackingRepository} with local movements retrieval and submission for
+ * tests.
+ */
 public class TrackingRepositoryLocal implements TrackingRepository {
   protected static TrackingServiceContract sTrackingServiceContract;
   protected static TrackingServiceLocal sAlienTrackingServiceLocal;
