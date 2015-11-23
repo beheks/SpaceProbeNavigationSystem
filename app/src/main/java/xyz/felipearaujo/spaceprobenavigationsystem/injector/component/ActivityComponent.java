@@ -2,10 +2,9 @@ package xyz.felipearaujo.spaceprobenavigationsystem.injector.component;
 
 import dagger.Component;
 
-import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.ActivityModule;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.scope.PerActivity;
-import xyz.felipearaujo.spaceprobenavigationsystem.ui.MainActivity;
+import xyz.felipearaujo.spaceprobenavigationsystem.ui.activity.MainActivity;
 
 @PerActivity
 @Component(dependencies = CommonComponent.class, modules = ActivityModule.class)

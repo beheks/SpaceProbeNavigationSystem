@@ -1,4 +1,10 @@
 <resources>
   <string name="app_name">Space Probe Navigation System</string>
-  <string name="alien_ship_out_of_bounds_exception_message">Ship out of Universe Bounds!</string>
+
+  <string name="main_activity">Space Probe Navigation System</string>
+
+  <string name="calculate_button">Calculate</string>
+  <string name="submit_button">Submit</string>
+  <string name="email_hint">Email</string>
+
 </resources>

@@ -1,13 +1,10 @@
-package xyz.felipearaujo.spaceprobenavigationsystem.ui;
+package xyz.felipearaujo.spaceprobenavigationsystem.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import rx.Subscriber;
-import xyz.felipearaujo.spaceprobenavigationsystem.exception.ShipOutOfUniverseException;
 
 public class ActivitySubscriber<T> extends Subscriber<T> {
 

@@ -51,4 +51,11 @@ public class Ship {
     mPosition = mInitialPosition;
     mCurrentDirection = mInitialDirection;
   }
+
+  @Override
+  public String toString() {
+    return "At x:" + mPosition.x +
+        " y:" + mPosition.y +
+        " facing " + mCurrentDirection.toString().toLowerCase();
+  }
 }

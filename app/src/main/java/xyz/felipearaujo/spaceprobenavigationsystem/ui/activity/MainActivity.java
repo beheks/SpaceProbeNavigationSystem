@@ -1,10 +1,13 @@
-package xyz.felipearaujo.spaceprobenavigationsystem.ui;
+package xyz.felipearaujo.spaceprobenavigationsystem.ui.activity;
 
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import xyz.felipearaujo.spaceprobenavigationsystem.R;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
@@ -25,68 +29,79 @@ import xyz.felipearaujo.spaceprobenavigationsystem.interactor.SubmitData;
 
 public class MainActivity extends AppCompatActivity {
 
-  @Bind(R.id.result) protected TextView textView;
-  @Bind(R.id.progressBar) protected ProgressBar progressBar;
-  @Bind(R.id.button) protected Button button;
-  @Bind(R.id.submitButton) protected Button submitButton;
+  @Bind(R.id.ship_position) protected TextView mShipPosition;
+  @Bind(R.id.spinner) protected ProgressBar mSpinner;
+  @Bind(R.id.calculate_button) protected Button mCalculateButton;
+  @Bind(R.id.submit_button) protected Button mSubmitButton;
+  @Bind(R.id.email) protected EditText mEmail;
 
   @Inject MoveShipToFinalPosition mMoveAlienShipToFinalPosition;
   @Inject SubmitData mSubmitData;
   @Inject Ship mShip;
 
-  @OnClick(R.id.button)
-  protected void buttonClick() {
+  @OnClick(R.id.calculate_button)
+  protected void calculateButtonClick() {
     showSpinner();
-    button.setEnabled(false);
+    mCalculateButton.setEnabled(false);
 
-    mMoveAlienShipToFinalPosition.execute("test@test.com")
+    mMoveAlienShipToFinalPosition.execute(mEmail.getText().toString())
         .subscribe(new ActivitySubscriber<Point>(MainActivity.this) {
           @Override
           public void onCompleted() {
             super.onCompleted();
 
-            textView.setText(mShip.getPosition().toString());
-
-            showText();
             showSubmitButton();
+            showText();
           }
 
           @Override
           public void onError(Throwable e) {
             super.onError(e);
-            showText();
+
             showCalculateButton();
+            showText();
           }
         });
   }
 
-  @OnClick(R.id.submitButton)
+  @OnClick(R.id.submit_button)
   protected void submitButtonClick() {
     showSpinner();
-    submitButton.setEnabled(false);
+    mSubmitButton.setEnabled(false);
 
-    mSubmitData.execute("test@test.com")
+    mSubmitData.execute(mEmail.getText().toString())
         .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
           @Override
           public void onCompleted() {
             super.onCompleted();
-            showText();
+
             showCalculateButton();
+            showText();
           }
 
           @Override
           public void onNext(String message) {
-            //textView.setText(message);
             Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
           }
 
           @Override
           public void onError(Throwable e) {
             super.onError(e);
-            showText();
+
             showSubmitButton();
+            showText();
           }
         });
+  }
+
+  @OnTextChanged(R.id.email)
+  protected void emailTextChanged() {
+    if(Patterns.EMAIL_ADDRESS.matcher(mEmail.getText().subSequence(0, mEmail.length())).matches()) {
+      mCalculateButton.setEnabled(true);
+    }
+    else {
+      mCalculateButton.setEnabled(false);
+    }
   }
 
   @Override
@@ -103,32 +118,35 @@ public class MainActivity extends AppCompatActivity {
 
     ButterKnife.bind(this);
 
-    showCalculateButton();
     showText();
-
-    textView.setText(mShip.getPosition().toString());
+    showCalculateButton();
+    mCalculateButton.setEnabled(false);
   }
 
   private void showCalculateButton() {
-    submitButton.setVisibility(View.GONE);
-    button.setVisibility(View.VISIBLE);
-    button.setEnabled(true);
+    mShip.resetShip();
+    mEmail.setEnabled(true);
+    mSubmitButton.setVisibility(View.GONE);
+    mCalculateButton.setVisibility(View.VISIBLE);
+    mCalculateButton.setEnabled(true);
   }
 
   private void showSubmitButton() {
-    submitButton.setVisibility(View.VISIBLE);
-    button.setVisibility(View.GONE);
-    submitButton.setEnabled(true);
+    mEmail.setEnabled(false);
+    mSubmitButton.setVisibility(View.VISIBLE);
+    mCalculateButton.setVisibility(View.GONE);
+    mSubmitButton.setEnabled(true);
   }
 
   private void showText() {
-    textView.setVisibility(View.VISIBLE);
-    progressBar.setVisibility(View.GONE);
+    mShipPosition.setText(mShip.toString());
+    mShipPosition.setVisibility(View.VISIBLE);
+    mSpinner.setVisibility(View.GONE);
   }
 
   private void showSpinner() {
-    textView.setVisibility(View.GONE);
-    progressBar.setVisibility(View.VISIBLE);
+    mShipPosition.setVisibility(View.GONE);
+    mSpinner.setVisibility(View.VISIBLE);
   }
 
 

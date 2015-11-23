@@ -5,7 +5,7 @@ import dagger.Component;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.ActivityModuleTest;
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.scope.PerActivity;
-import xyz.felipearaujo.spaceprobenavigationsystem.ui.MainActivity;
+import xyz.felipearaujo.spaceprobenavigationsystem.ui.activity.MainActivity;
 
 @PerActivity
 @Component(dependencies = CommonComponentTest.class, modules = ActivityModuleTest.class)
