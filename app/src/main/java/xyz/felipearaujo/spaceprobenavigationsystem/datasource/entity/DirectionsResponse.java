@@ -6,7 +6,7 @@ import java.util.List;
  * Response from getData from API.
  */
 public class DirectionsResponse {
-  private List<String> Directions;
+  private final List<String> Directions;
 
   public DirectionsResponse(List<String> directions) {
     Directions = directions;

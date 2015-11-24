@@ -4,9 +4,9 @@ package xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity;
  * Response from submitData from API.
  */
 public class SubmissionResponse {
-  private int StatusCode;
+  private final int StatusCode;
 
-  private String Message;
+  private final String Message;
 
   public SubmissionResponse(int statusCode, String message) {
     StatusCode = statusCode;

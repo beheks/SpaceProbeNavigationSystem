@@ -9,7 +9,7 @@ import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition.Direc
 public class Ship {
 
   private DirectedPosition mPosition;
-  private DirectedPosition mInitialPosition;
+  private final DirectedPosition mInitialPosition;
 
   public Ship(int x, int y, Direction direction) {
     this.mPosition = new DirectedPosition(x, y, direction);

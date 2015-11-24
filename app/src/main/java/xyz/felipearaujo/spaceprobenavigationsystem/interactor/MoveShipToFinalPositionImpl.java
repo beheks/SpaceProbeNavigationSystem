@@ -1,15 +1,11 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor;
 
-import android.graphics.Point;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
@@ -41,8 +37,8 @@ public class MoveShipToFinalPositionImpl implements MoveShipToFinalPosition {
             }
             return mShip.getPosition();
           }
-        })
+        })/*
         .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
+        .observeOn(AndroidSchedulers.mainThread())*/;
   }
 }

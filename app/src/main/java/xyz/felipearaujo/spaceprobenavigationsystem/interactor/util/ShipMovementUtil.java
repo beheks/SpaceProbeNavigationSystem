@@ -1,7 +1,5 @@
 package xyz.felipearaujo.spaceprobenavigationsystem.interactor.util;
 
-import android.graphics.Point;
-
 import com.google.common.collect.ImmutableMap;
 
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.Ship;
@@ -31,7 +29,7 @@ public class ShipMovementUtil {
       Direction.SOUTH, Direction.WEST,
       Direction.WEST, Direction.NORTH);
 
-  public static DirectedPosition moveShip(TrackingServiceContract.ShipAction shipAction,
+  public static void moveShip(TrackingServiceContract.ShipAction shipAction,
                                Ship ship,
                                Universe universe)
       throws ShipOutOfUniverseException {
@@ -53,7 +51,6 @@ public class ShipMovementUtil {
       default:
         break;
     }
-    return ship.getPosition();
   }
 
 
@@ -61,6 +58,7 @@ public class ShipMovementUtil {
                                          DirectedPosition increase,
                                          Universe universe)
       throws ShipOutOfUniverseException {
+
     DirectedPosition newPosition = new DirectedPosition(start.getX() + increase.getX(),
         start.getY() + increase.getY(),
         start.getDirection());

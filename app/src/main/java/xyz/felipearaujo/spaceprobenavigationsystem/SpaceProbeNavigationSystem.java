@@ -8,6 +8,7 @@ import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.CommonModule;
 
 public class SpaceProbeNavigationSystem extends Application {
   private static CommonComponent sCommonComponent;
+
   @Override
   public void onCreate() {
     super.onCreate();

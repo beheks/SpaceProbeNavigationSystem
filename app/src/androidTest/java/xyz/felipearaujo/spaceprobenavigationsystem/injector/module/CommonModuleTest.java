@@ -11,7 +11,6 @@ import xyz.felipearaujo.spaceprobenavigationsystem.entity.Universe;
 import xyz.felipearaujo.spaceprobenavigationsystem.repository.TrackingRepositoryImpl;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContractImpl;
-import xyz.felipearaujo.spaceprobenavigationsystem.repository.local.TrackingServiceLocal;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.TrackingService;
 
 //TODO Create Mocks
@@ -24,11 +23,11 @@ public class CommonModuleTest {
     return new TrackingServiceContractImpl();
   }
 
-  @Provides
+  /*@Provides
   @Singleton
   TrackingServiceLocal provideAlienTrackingServiceLocal() {
     return new TrackingServiceLocal();
-  }
+  }*/
 
   @Provides
   @Singleton

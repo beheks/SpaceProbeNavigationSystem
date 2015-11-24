@@ -7,10 +7,10 @@ import xyz.felipearaujo.spaceprobenavigationsystem.injector.module.ActivityModul
 import xyz.felipearaujo.spaceprobenavigationsystem.injector.scope.PerActivity;
 import xyz.felipearaujo.spaceprobenavigationsystem.ui.activity.MainActivity;
 
-@PerActivity
-@Component(dependencies = CommonComponentTest.class, modules = ActivityModuleTest.class)
+/*@PerActivity
+@Component(dependencies = CommonComponentTest.class, modules = ActivityModuleTest.class)*/
 public interface ActivityComponentTest {
-  void inject(MainActivity activity);
+  /*void inject(MainActivity activity);
 
-  Ship getAlienShip();
+  Ship getAlienShip();*/
 }

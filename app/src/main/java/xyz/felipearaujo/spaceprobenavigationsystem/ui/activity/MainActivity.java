@@ -16,6 +16,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.R;
 import xyz.felipearaujo.spaceprobenavigationsystem.SpaceProbeNavigationSystem;
 import xyz.felipearaujo.spaceprobenavigationsystem.entity.DirectedPosition;
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     mCalculateButton.setEnabled(false);
 
     mMoveAlienShipToFinalPosition.execute(mEmail.getText().toString())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new ActivitySubscriber<DirectedPosition>(MainActivity.this) {
           @Override
           public void onCompleted() {
@@ -69,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     mSubmitButton.setEnabled(false);
 
     mSubmitData.execute(mEmail.getText().toString())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new ActivitySubscriber<String>(MainActivity.this) {
           @Override
           public void onCompleted() {

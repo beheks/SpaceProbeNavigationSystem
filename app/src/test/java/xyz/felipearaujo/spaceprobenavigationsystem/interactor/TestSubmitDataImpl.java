@@ -6,8 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
-
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -21,8 +19,8 @@ import xyz.felipearaujo.spaceprobenavigationsystem.injector.TestModule;
 
 @RunWith(JUnit4.class)
 public class TestSubmitDataImpl {
-  @Inject private TrackingService service;
-  @Inject private SubmitData submitData;
+  @Inject protected TrackingService service;
+  @Inject protected SubmitData submitData;
 
   @Before
   public void setup() {

@@ -12,6 +12,7 @@ import xyz.felipearaujo.spaceprobenavigationsystem.datasource.TrackingService;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract.TrackingServiceContract;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity.DirectionsResponse;
 import xyz.felipearaujo.spaceprobenavigationsystem.datasource.entity.SubmissionResponse;
+import xyz.felipearaujo.spaceprobenavigationsystem.exception.WrongAnswerException;
 
 /**
  * Implementation for {@link TrackingRepository} for communicating with the API for retrieving
@@ -51,6 +52,9 @@ public class TrackingRepositoryImpl implements TrackingRepository {
         .map(new Func1<SubmissionResponse, String>() {
           @Override
           public String call(SubmissionResponse submissionResponse) {
+            if(submissionResponse.getStatusCode() != TrackingServiceContract.RIGHT_ANSWER_CODE) {
+              throw new WrongAnswerException(submissionResponse.getMessage());
+            }
             return submissionResponse.getMessage();
           }
         });

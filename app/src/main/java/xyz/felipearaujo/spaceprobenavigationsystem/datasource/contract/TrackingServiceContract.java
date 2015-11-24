@@ -9,5 +9,8 @@ public interface TrackingServiceContract {
     LEFT
   }
 
+  int RIGHT_ANSWER_CODE = 200;
+  int WRONG_ANSWER_CODE = 500;
+
   ShipAction parseAction(String action) throws IllegalShipActionException;
 }

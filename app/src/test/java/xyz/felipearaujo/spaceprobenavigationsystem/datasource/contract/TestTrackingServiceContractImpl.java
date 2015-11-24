@@ -3,38 +3,42 @@ package xyz.felipearaujo.spaceprobenavigationsystem.datasource.contract;
 import junit.framework.Assert;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import javax.inject.Inject;
+
 import xyz.felipearaujo.spaceprobenavigationsystem.exception.IllegalShipActionException;
+import xyz.felipearaujo.spaceprobenavigationsystem.injector.DaggerTestComponent;
+import xyz.felipearaujo.spaceprobenavigationsystem.injector.TestModule;
 
 @RunWith(JUnit4.class)
 public class TestTrackingServiceContractImpl {
-  String forward = "FORWARD";
-  String left = "LEFT";
-  String right = "RIGHT";
-  String broken = "BROKEN";
 
-  TrackingServiceContract contract;
+  @Inject protected TrackingServiceContract contract;
 
   @Before
   public void setup() {
-    contract = new TrackingServiceContractImpl();
+    DaggerTestComponent
+        .builder()
+        .testModule(new TestModule())
+        .build()
+        .inject(this);
   }
 
   @Test
   public void testWorkingActionsParse() {
-    Assert.assertEquals(contract.parseAction(forward), TrackingServiceContract.ShipAction.FORWARD);
-    Assert.assertEquals(contract.parseAction(left), TrackingServiceContract.ShipAction.LEFT);
-    Assert.assertEquals(contract.parseAction(right), TrackingServiceContract.ShipAction.RIGHT);
+    Assert.assertEquals(contract.parseAction("FORWARD"),
+        TrackingServiceContract.ShipAction.FORWARD);
+    Assert.assertEquals(contract.parseAction("LEFT"), TrackingServiceContract.ShipAction.LEFT);
+    Assert.assertEquals(contract.parseAction("RIGHT"), TrackingServiceContract.ShipAction.RIGHT);
   }
 
   @Test(expected = IllegalShipActionException.class)
   public void testFailingActionParse() {
-    contract.parseAction(broken);
+
+    contract.parseAction("BROKEN");
     contract.parseAction(null);
     contract.parseAction("");
 

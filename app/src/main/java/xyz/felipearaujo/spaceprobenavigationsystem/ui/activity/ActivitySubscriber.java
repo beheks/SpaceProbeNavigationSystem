@@ -6,9 +6,9 @@ import android.widget.Toast;
 
 import rx.Subscriber;
 
-public class ActivitySubscriber<T> extends Subscriber<T> {
+class ActivitySubscriber<T> extends Subscriber<T> {
 
-  private AppCompatActivity mActivity;
+  private final AppCompatActivity mActivity;
 
   public ActivitySubscriber(AppCompatActivity activity) {
     super();

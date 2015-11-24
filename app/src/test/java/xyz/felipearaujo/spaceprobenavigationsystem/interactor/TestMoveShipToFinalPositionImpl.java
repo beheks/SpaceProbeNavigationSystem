@@ -23,8 +23,8 @@ import xyz.felipearaujo.spaceprobenavigationsystem.injector.TestModule;
 
 @RunWith(JUnit4.class)
 public class TestMoveShipToFinalPositionImpl {
-  @Inject private TrackingService service;
-  @Inject private MoveShipToFinalPosition moveShipToFinalPosition;
+  @Inject protected TrackingService service;
+  @Inject protected MoveShipToFinalPosition moveShipToFinalPosition;
 
   @Before
   public void setup() {
@@ -48,6 +48,16 @@ public class TestMoveShipToFinalPositionImpl {
 
   @Test
   public void testMoveShipOutOfUniverse() {
+    Mockito.when(service.getData("")).thenReturn(
+        Observable.just(new DirectionsResponse(Arrays.asList("LEFT", "FORWARD"))));
+
+    TestSubscriber<DirectedPosition> test = new TestSubscriber<>();
+    moveShipToFinalPosition.execute("").subscribe(test);
+    test.assertError(ShipOutOfUniverseException.class);
+  }
+
+  @Test
+  public void testNull() {
     Mockito.when(service.getData("")).thenReturn(
         Observable.just(new DirectionsResponse(Arrays.asList("LEFT", "FORWARD"))));
 

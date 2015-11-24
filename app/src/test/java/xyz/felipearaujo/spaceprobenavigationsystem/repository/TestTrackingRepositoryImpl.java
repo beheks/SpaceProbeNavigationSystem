@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,9 +26,9 @@ import xyz.felipearaujo.spaceprobenavigationsystem.injector.TestModule;
 @RunWith(JUnit4.class)
 public class TestTrackingRepositoryImpl {
 
-  @Inject private TrackingRepository repository;
-  @Inject private TrackingServiceContract contract;
-  @Inject private TrackingService service;
+  @Inject protected TrackingRepository repository;
+  @Inject protected TrackingServiceContract contract;
+  @Inject protected TrackingService service;
   private List<TrackingServiceContract.ShipAction> expected;
 
 
