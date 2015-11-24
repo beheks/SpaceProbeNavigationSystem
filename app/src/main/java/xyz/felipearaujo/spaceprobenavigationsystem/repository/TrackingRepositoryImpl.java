@@ -22,6 +22,8 @@ public class TrackingRepositoryImpl implements TrackingRepository {
   protected static TrackingService sTrackingService;
   protected static TrackingServiceContract sTrackingServiceContract;
 
+  private int retryCount = 0;
+
   @Inject
   public TrackingRepositoryImpl(TrackingServiceContract contract, TrackingService service) {
     sTrackingService = service;
@@ -43,8 +45,8 @@ public class TrackingRepositoryImpl implements TrackingRepository {
               }
               return actions;
             }
-          }
-        );
+          })
+        .retry(3);
   }
   @Override
   public Observable<String> submitFinalPosition(String email, int x, int y) {
